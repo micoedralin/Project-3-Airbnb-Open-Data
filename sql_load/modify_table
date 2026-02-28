@@ -1,0 +1,4 @@
+COPY airbnb_data
+FROM 'C:/Users/Mico/Project 3 Airbnb Open Data/Airbnb_Open_Data_Clean.csv'
+WITH (FORMAT csv, HEADER true, DELIMITER ',', ENCODING 'UTF8', NULL '')
+

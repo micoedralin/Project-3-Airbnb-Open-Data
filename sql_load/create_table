@@ -1,0 +1,30 @@
+CREATE TABLE airbnb_data
+(
+    id BIGINT PRIMARY KEY,
+    listing_name TEXT,
+    host_id BIGINT,
+    host_identity_verified VARCHAR(20),
+    host_name TEXT,
+    borough VARCHAR(20),
+    neighborhood TEXT,
+    lat DOUBLE PRECISION,
+    long DOUBLE PRECISION,
+    country VARCHAR(20),
+    country_code VARCHAR(10),
+    instant_bookable VARCHAR(10),
+    cancellation_policy VARCHAR(10),
+    room_type VARCHAR(20),
+    construction_year INT,
+    price INT,
+    service_fee INT,
+    minimum_nights INT,
+    number_of_reviews INT,
+    last_review DATE,
+    reviews_per_month NUMERIC,
+    review_rate_number INT,
+    calculated_host_listings_count INT,
+    availability_365 INT,
+    house_rules TEXT
+);
+
+ALTER TABLE public.airbnb_data OWNER to postgres

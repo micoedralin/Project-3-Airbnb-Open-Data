@@ -1,0 +1,33 @@
+-- What neighborhoods have the highest nightly prices for single rooms in New York City? --
+
+SELECT
+    COUNT(id) AS listing_count,
+    borough,
+    neighborhood,
+    AVG(price) AS avg_price,
+    room_type
+FROM
+    airbnb_data
+WHERE
+    price IS NOT NULL
+    AND room_type = ''
+GROUP BY
+    borough,
+    neighborhood
+HAVING
+    COUNT(id) > 50
+ORDER BY
+    avg_price DESC;
+
+SELECT *
+FROM airbnb_data
+
+SELECT 
+  neighborhood,
+  COUNT(*) AS listings,
+  ROUND(AVG(price), 2) AS avg_price,
+  ROUND(AVG(availability_365), 1) AS avg_availability
+FROM airbnb_data
+WHERE neighborhood IN ('Briarwood', 'Jamaica', 'Kew Gardens')
+GROUP BY neighborhood
+ORDER BY listings DESC;
