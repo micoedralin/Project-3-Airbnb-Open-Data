@@ -24,7 +24,6 @@ ORDER BY
     median_price_per_night DESC;
 
 
-
 -- Which boroughs have the highest nightly prices for listings in New York City regardless of room type? --
 
 SELECT
@@ -42,7 +41,6 @@ GROUP BY
     borough
 ORDER BY
     median_price_per_night DESC;
-
 
 
 -- Which neighborhoods in Manhattan is cheapests by nightly prices? --
@@ -66,7 +64,6 @@ ORDER BY
     median_price_per_night ASC;
 
 
-
 --  How does reviews affect single night prices of listings in a neighborhood like Brooklyn? --
    
 SELECT
@@ -86,7 +83,6 @@ GROUP BY
     review_rate_number
 ORDER BY
     review_rate_number DESC;
-
 
 
 -- What are the most expensive neighborhoods in total price (service fee + price) for entire home/apt in New York City? --
