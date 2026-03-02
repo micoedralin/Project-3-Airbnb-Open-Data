@@ -1,33 +1,116 @@
--- What neighborhoods have the highest nightly prices for single rooms in New York City? --
+-- What neighborhoods have the highest nightly prices for private rooms in New York City? --
 
 SELECT
-    COUNT(id) AS listing_count,
+    neighborhood,
+    borough,
+    room_type,
+    COUNT(*) AS listing_count,
+    ROUND(AVG(price), 2) AS avg_price_per_night,
+    PERCENTILE_CONT(.5) WITHIN GROUP (ORDER BY price) AS median_price_per_night
+FROM 
+    airbnb_data
+WHERE
+    price IS NOT NULL
+    AND price BETWEEN 50 AND 1500
+    AND room_type = 'Private room'
+    AND minimum_nights = 1
+GROUP BY
     borough,
     neighborhood,
-    AVG(price) AS avg_price,
     room_type
+HAVING
+    COUNT(*) >= 50
+ORDER BY
+    median_price_per_night DESC;
+
+
+
+-- Which boroughs have the highest nightly prices for listings in New York City regardless of room type? --
+
+SELECT
+    borough,
+    COUNT(*) AS listing_count,
+    ROUND(AVG(price),2) AS avg_price_per_night,
+    PERCENTILE_CONT(.5) WITHIN GROUP (ORDER BY price) AS median_price_per_night
 FROM
     airbnb_data
 WHERE
     price IS NOT NULL
-    AND room_type = ''
+    AND price BETWEEN 50 AND 1500
+    AND minimum_nights = 1
 GROUP BY
-    borough,
+    borough
+ORDER BY
+    median_price_per_night DESC;
+
+
+
+-- Which neighborhoods in Manhattan is cheapests by nightly prices? --
+
+SELECT
+    neighborhood,
+    COUNT(*) AS listing_count,
+    ROUND(AVG(price),2) AS avg_price_per_night,
+    PERCENTILE_CONT(.5) WITHIN GROUP (ORDER BY price) AS median_price_per_night
+FROM
+    airbnb_data
+WHERE
+    price IS NOT NULL
+    AND minimum_nights = 1
+    AND borough = 'Manhattan'
+GROUP BY
     neighborhood
 HAVING
-    COUNT(id) > 50
+    COUNT(*) >= 50
 ORDER BY
-    avg_price DESC;
+    median_price_per_night ASC;
 
-SELECT *
-FROM airbnb_data
 
-SELECT 
-  neighborhood,
-  COUNT(*) AS listings,
-  ROUND(AVG(price), 2) AS avg_price,
-  ROUND(AVG(availability_365), 1) AS avg_availability
-FROM airbnb_data
-WHERE neighborhood IN ('Briarwood', 'Jamaica', 'Kew Gardens')
-GROUP BY neighborhood
-ORDER BY listings DESC;
+
+--  How does reviews affect single night prices of listings in a neighborhood like Brooklyn? --
+   
+SELECT
+    review_rate_number,
+    COUNT(*) AS listing_count,
+    ROUND(AVG(price),2) AS avg_price_per_night,
+    PERCENTILE_CONT(.5) WITHIN GROUP (ORDER BY price) AS median_price_per_night
+FROM
+    airbnb_data
+WHERE
+    price IS NOT NULL
+    AND review_rate_number IS NOT NULL
+    AND minimum_nights = 1
+    AND number_of_reviews >= 10
+    AND borough = 'Brooklyn'
+GROUP BY
+    review_rate_number
+ORDER BY
+    review_rate_number DESC;
+
+
+
+-- What are the most expensive neighborhoods in total price (service fee + price) for entire home/apt in New York City? --
+
+SELECT
+    neighborhood,
+    borough,
+    room_type,
+    COUNT(*) AS listing_count,
+    ROUND(AVG(price + service_fee), 2) AS avg_total_price_per_night,
+    PERCENTILE_CONT(.5) WITHIN GROUP (ORDER BY price + service_fee) AS total_median_price_per_night
+FROM 
+    airbnb_data
+WHERE
+    service_fee IS NOT NULL
+    AND price IS NOT NULL
+    AND price BETWEEN 50 AND 1500
+    AND room_type = 'Private room'
+    AND minimum_nights = 1
+GROUP BY
+    borough,
+    neighborhood,
+    room_type
+HAVING
+    COUNT(*) >= 50
+ORDER BY
+    total_median_price_per_night DESC;
