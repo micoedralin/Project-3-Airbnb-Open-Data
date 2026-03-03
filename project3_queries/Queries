@@ -104,7 +104,7 @@ WHERE
     service_fee IS NOT NULL
     AND price IS NOT NULL
     AND price BETWEEN 50 AND 1500
-    AND room_type = 'Private room'
+    AND room_type = 'Entire home/apt'
     AND minimum_nights = 1
 GROUP BY
     borough,
@@ -114,3 +114,4 @@ HAVING
     COUNT(*) >= 50
 ORDER BY
     total_median_price_per_night DESC;
+
