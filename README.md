@@ -91,12 +91,11 @@ Here are some insights I uncovered about this query
 
 - Based on the difference between median and average price on many listings we can assume that there were many luxury apartments or other factors that could've driven up the average cost that we cannot account for based on the data given.
  
- 
+
 # Data Challenges and Solutions
 - There were columns such as minimum nights where values were over 365 days and although I fixed it in power query to ensure values weren't over 365 days, it was hard to determine which values were typos and which values were real. The prices were also questionable since there would be rows in which price would be $210 and minimum nights would be 150. To account for this issue, I made sure to filter out the query so that minimum nights were only for 1 night ensuring that the price reflected the 1 night value.
 
 - Some data had small number of listings and I wanted the data to be accurate and reliable so I decided to filter out some queries to at least 50 listings so that the result is big enough to be reliable, this could also even out prices based on the size of the listings since even though we filter out some listings to private rooms and entire home/apt the price may be reflective of the size of the private room and the size of the entire home/apt.
-
 
 # Conclusion
 In creating this project there were many interesting findings that surprised me, including the prices for different neighborhoods. As stated earlier, there were many factors that I cannot account for so it was hard to come to a robust conclusion. Overall, some of the biggest factors that determined prices were listing availability, proximity to parks and transportation, types of rentals such as luxury apartments, the size of rooms or entire home/apt, and location.
